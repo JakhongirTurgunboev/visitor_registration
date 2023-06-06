@@ -1,0 +1,51 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<div class="container py-5">
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/buildings">
+    Buildings
+  </a>
+	<p class="text-center"><a href="/logout">Logout</a></p>
+</nav>
+	<form method="POST">
+		{% csrf_token %}
+	<table class="table">
+  <thead>
+    <tr>
+     	 <th scope="col">#</th>
+      	<th scope="col">Full name</th>
+      	<th scope="col">Building</th>
+      	<th scope="col">Date</th>
+		<th scope="col">Status</th>
+		<th scope="col">Accept</th>
+		<th scope="col">Reject</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in reservations %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      	<td>{{ r.first_name }}  {{ r.last_name }}</td>
+      	<td>{{ r.planned_date }}</td>
+      	<td>{{ r.building.name }}</td>
+		{% if r.status is 0 %}
+  			<td>In Progress</td>
+		{% elif r.status is -1 %}
+  			<td>Rejected</td>
+		{% else %}
+			<td>Accepted</td>
+		{% endif %}
+		<td><input class="form-check-input" type="checkbox" value="{{r.id}}" name="accept{{r.id}}"></td>
+		<td><input class="form-check-input" type="checkbox" value="{{r.id}}" name="reject{{r.id}}"></td>
+	</tr>
+  {% endfor %}
+  </tbody>
+</table>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+
+{% endblock %}

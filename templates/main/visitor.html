@@ -1,0 +1,50 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!--Register-->
+<div class="container py-5">
+	<nav class="navbar navbar-light bg-light">
+	<p class="text-center"><a href="/logout">Logout</a></p>
+</nav>
+	<h1>Reservation</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ reservation_form|crispy }}
+		<button class="btn btn-primary" type="submit">Submit</button>
+	</form>
+	<h3>Your other reservations</h3>
+	<table class="table">
+  	<thead>
+    <tr>
+      	<th scope="col">#</th>
+      	<th scope="col">Full name</th>
+      	<th scope="col">Planned Date</th>
+		<th scope="col">Building</th>
+      	<th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for r in reservations %}
+    <tr>
+      	<th scope="row">{{ forloop.counter }}</th>
+      	<td>{{ r.first_name }}  {{ r.last_name }}</td>
+      	<td>{{ r.planned_date }}</td>
+      	<td>{{ r.building.name }}</td>
+		{% if r.status is 0 %}
+  			<td>In Progress</td>
+		{% elif r.status is -1 %}
+  			<td>Rejected</td>
+		{% else %}
+			<td>Accepted</td>
+		{% endif %}
+	</tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}

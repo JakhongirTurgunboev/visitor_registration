@@ -1,0 +1,43 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<div class="container py-5">
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    Reservations
+  </a>
+	<p class="text-center"><a href="/logout">Logout</a></p>
+</nav>
+	<h1>New building</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ building_form|crispy }}
+		<button class="btn btn-primary" type="submit">Submit</button>
+	</form>
+
+	<h3>List of buildings</h3>
+
+	<table class="table">
+  	<thead>
+    <tr>
+      	<th scope="col">#</th>
+      	<th scope="col">Name</th>
+      	<th scope="col">Address</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for b in buildings %}
+    <tr>
+      	<th scope="row">{{ forloop.counter }}</th>
+      	<td>{{ b.name }}</td>
+      	<td>{{ b.address }}</td>
+	</tr>
+  {% endfor %}
+  </tbody>
+
+</table>
+
+</div>
+{% endblock %}

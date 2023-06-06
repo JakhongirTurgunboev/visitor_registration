@@ -38,10 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'viewflow',
-    'visitor',
     'accounts',
     'crispy_forms',
-    'crispy_bootstrap4'
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -85,7 +84,9 @@ DATABASES = {
     }
 }
 
-CRISPY_TEMPLATE_PACK = 'crispy-bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Password validation
@@ -123,6 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
